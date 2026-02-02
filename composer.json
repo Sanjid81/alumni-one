@@ -1,0 +1,17 @@
+{
+    "name": "tanjilahmed/notionhive-digital",
+    "autoload": {
+        "psr-4": {
+            "Tanjilahmed\\NotionhiveDigital\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tanjil Ahmed",
+            "email": "tanjilahmed87@gmail.com"
+        }
+    ],
+    "require": {
+        "htmlburger/carbon-fields": "^3.6"
+    }
+}
