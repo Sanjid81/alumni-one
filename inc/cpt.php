@@ -64,7 +64,7 @@ function create_post_type()
                 'singular_name' => __('Insight')
             ),
             'public' => true,
-            'has_archive' => true,
+            'has_archive' => false,
             'show_in_rest' => true,
             'supports' => array('title', 'editor', 'thumbnail', 'revisions', 'excerpt'),
             'rewrite' => array('slug' => 'insights'),
@@ -98,7 +98,7 @@ function create_post_type()
                 'singular_name' => __('Project')
             ),
             'public' => true,
-            'has_archive' => true,
+            'has_archive' => false,
             'show_in_rest' => true,
             'supports' => array('title', 'editor', 'thumbnail', 'revisions', 'excerpt'),
             'rewrite' => array('slug' => 'projects'),

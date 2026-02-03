@@ -12,6 +12,13 @@ function add_graphql_support_to_posts($args, $post_type)
 
 function headless_allowed_block_types($allowed_blocks, $editor_context)
 {
+    $view_mode = carbon_get_theme_option('view_mode');
+
+    // If not in content management mode, allow all blocks
+    if ($view_mode !== 'content_management') {
+        return $allowed_blocks;
+    }
+
     // List of allowed custom blocks
     $custom_blocks = array(
         'carbon-fields/hero',
@@ -52,9 +59,30 @@ add_filter('allowed_block_types_all', 'headless_allowed_block_types', 10, 2);
 
 add_filter('register_post_type_args', 'add_graphql_support_to_posts', 10, 2);
 
-// Hide default WordPress Posts
-function headless_remove_default_posts_menu()
+// Hide menus based on view mode
+function headless_restrict_admin_menu()
 {
-    remove_menu_page('edit.php');
+    $view_mode = carbon_get_theme_option('view_mode');
+
+    if ($view_mode === 'content_management') {
+        remove_menu_page('edit.php'); // Posts
+        remove_menu_page('plugins.php');
+        remove_menu_page('edit-comments.php');
+        remove_menu_page('themes.php'); // Appearance
+        remove_menu_page('tools.php');
+        remove_menu_page('options-general.php'); // Settings
+        
+        // Form plugins
+        remove_menu_page('fluent_forms');
+        remove_menu_page('wpforms-overview');
+
+        // SEO and SMTP
+        remove_menu_page('wpseo_dashboard'); // Yoast SEO
+        remove_menu_page('wp-mail-smtp'); // WP Mail SMTP
+
+        // GraphQL
+        remove_menu_page('graphiql-ide'); // GraphiQL IDE
+        remove_menu_page('wp-graphql-gutenberg-admin'); // WPGraphQL Gutenberg
+    }
 }
-add_action('admin_menu', 'headless_remove_default_posts_menu');
+add_action('admin_menu', 'headless_restrict_admin_menu', 999);

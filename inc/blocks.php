@@ -536,15 +536,38 @@ function headless_register_components()
     WpGraphQLCrbContainer::register(
         Container::make('theme_options', __('Theme Options'))
             ->add_fields(array(
-                Field::make('text', 'title', __('Title', 'nh'))
-                    ->set_default_value(''),
-                Field::make('text', 'url', __('Frontend URL', 'nh'))
-                    ->set_default_value(''),
+                Field::make('select', 'view_mode', __('View Mode', 'nh'))
+                    ->add_options(array(
+                        'developer' => __('Developer (Full Access)', 'nh'),
+                        'content_management' => __('Content Management (Restricted Access)', 'nh'),
+                    ))
+                    ->set_default_value('developer')
+                    ->set_help_text(__('Choose between Developer or Content Management view.', 'nh')),
                 Field::make('file', 'website_logo', __('Main Logo', 'nh'))
                     ->set_value_type('url'),
+                Field::make('file', 'website_favicon', __('Favicon', 'nh'))
+                    ->set_value_type('url'),
+                Field::make('text', 'site_title', __('Site Title', 'nh'))
+                    ->set_default_value(''),
+                Field::make('textarea', 'site_description', __('Site Description', 'nh'))
+                    ->set_default_value(''),
+                Field::make('text', 'button_text', __('Button Text', 'nh'))
+                    ->set_default_value(''),
+                Field::make('association', 'button_page', __('Button Page', 'nh'))
+                    ->set_types([
+                        [
+                            'type' => 'post',
+                            'post_type' => 'page',
+                        ],
+                    ])
+                    ->set_max(1),
                 Field::make('text', 'email', __('Email Address', 'nh'))
                     ->set_default_value(''),
                 Field::make('textarea', 'address', __('Physical Address', 'nh'))
+                    ->set_default_value(''),
+                Field::make('text', 'url', __('Frontend URL', 'nh'))
+                    ->set_default_value(''),
+                Field::make('text', 'preconnect_url', __('Preconnect URL', 'nh'))
                     ->set_default_value(''),
             ))
     );
