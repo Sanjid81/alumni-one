@@ -529,31 +529,23 @@ function headless_register_components()
             ->set_keywords([__('Project Beyond Metrics Custom Block', 'nh')])
             ->set_description(__('Custom Block for Project Beyond Metrics section with a testimonial', 'nh'))
             ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
-    );
 
+        /////////////////////////////////////////////
+        //Thank you page blocks
+        /////////////////////////////////////////////
 
-    // Theme Options
-    WpGraphQLCrbContainer::register(
-        Container::make('theme_options', __('Theme Options'))
+        // Hero   
+        Block::make(__('Thank You Hero', 'nh'))
             ->add_fields(array(
-                Field::make('select', 'view_mode', __('View Mode', 'nh'))
-                    ->add_options(array(
-                        'developer' => __('Developer (Full Access)', 'nh'),
-                        'content_management' => __('Content Management (Restricted Access)', 'nh'),
-                    ))
-                    ->set_default_value('developer')
-                    ->set_help_text(__('Choose between Developer or Content Management view.', 'nh')),
-                Field::make('file', 'website_logo', __('Main Logo', 'nh'))
-                    ->set_value_type('url'),
-                Field::make('file', 'website_favicon', __('Favicon', 'nh'))
-                    ->set_value_type('url'),
-                Field::make('text', 'site_title', __('Site Title', 'nh'))
+                Field::make('html', 'crb_information_text')
+                    ->set_html('<h2>Hero Block</h2><img src="' . IMG . 'http://headless-toha-startup.local/wp-content/uploads/2026/02/hero.png" style="max-width: 100%; width: 100%; height: auto; border: 1px solid #ddd; margin-top: 10px;" />'),
+                Field::make('text', 'title', __('Title', 'nh'))
                     ->set_default_value(''),
-                Field::make('textarea', 'site_description', __('Site Description', 'nh'))
+                Field::make('textarea', 'description', __('Description', 'nh'))
                     ->set_default_value(''),
                 Field::make('text', 'button_text', __('Button Text', 'nh'))
                     ->set_default_value(''),
-                Field::make('association', 'button_page', __('Button Page', 'nh'))
+                Field::make('association', 'button_page', __('Select Button Page', 'nh'))
                     ->set_types([
                         [
                             'type' => 'post',
@@ -561,14 +553,69 @@ function headless_register_components()
                         ],
                     ])
                     ->set_max(1),
-                Field::make('text', 'email', __('Email Address', 'nh'))
-                    ->set_default_value(''),
-                Field::make('textarea', 'address', __('Physical Address', 'nh'))
-                    ->set_default_value(''),
-                Field::make('text', 'url', __('Frontend URL', 'nh'))
-                    ->set_default_value(''),
-                Field::make('text', 'preconnect_url', __('Preconnect URL', 'nh'))
-                    ->set_default_value(''),
+                Field::make( 'checkbox', 'open_in_new_tab', __( 'Open in new tab', 'nh' ) ),
             ))
+            ->set_icon('star-filled')
+            ->set_keywords([__('Thank You Hero Custom Block', 'nh')])
+            ->set_description(__('Custom Thank You Hero Block', 'nh'))
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
     );
+
+
+    // Theme Options
+WpGraphQLCrbContainer::register(
+    Container::make('theme_options', __('Theme Options'))
+        ->add_fields(array(
+            Field::make('select', 'view_mode', __('View Mode', 'nh'))
+                ->add_options(array(
+                    'developer' => __('Developer (Full Access)', 'nh'),
+                    'content_management' => __('Content Management (Restricted Access)', 'nh'),
+                ))
+                ->set_default_value('developer')
+                ->set_help_text(__('Choose between Developer or Content Management view.', 'nh')),
+
+            // ✅ Language Switcher Checkbox
+            Field::make('checkbox', 'enable_language_switcher', __('Enable Language Switcher', 'nh'))
+                ->set_option_value('yes')
+                ->set_default_value(false)
+                ->set_help_text(__('Check to enable the language switcher in the frontend.', 'nh')),
+
+            Field::make('file', 'website_logo', __('Main Logo', 'nh'))
+                ->set_value_type('url'),
+
+            Field::make('file', 'website_favicon', __('Favicon', 'nh'))
+                ->set_value_type('url'),
+
+            Field::make('text', 'site_title', __('Site Title', 'nh'))
+                ->set_default_value(''),
+
+            Field::make('textarea', 'site_description', __('Site Description', 'nh'))
+                ->set_default_value(''),
+
+            Field::make('text', 'button_text', __('Button Text', 'nh'))
+                ->set_default_value(''),
+
+            Field::make('association', 'button_page', __('Button Page', 'nh'))
+                ->set_types([
+                    [
+                        'type' => 'post',
+                        'post_type' => 'page',
+                    ],
+                ])
+                ->set_max(1),
+
+            Field::make('text', 'email', __('Email Address', 'nh'))
+                ->set_default_value(''),
+
+            Field::make('textarea', 'address', __('Physical Address', 'nh'))
+                ->set_default_value(''),
+
+            Field::make('text', 'url', __('Frontend URL', 'nh'))
+                ->set_default_value(''),
+
+            Field::make('text', 'preconnect_url', __('Preconnect URL', 'nh'))
+                ->set_default_value(''),
+        ))
+  );
+
 }

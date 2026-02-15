@@ -43,6 +43,7 @@ function headless_allowed_block_types($allowed_blocks, $editor_context)
         'carbon-fields/what-we-did',
         'carbon-fields/project-results',
         'carbon-fields/project-beyond-metrics',
+        'carbon-fields/thank-you-hero',
     );
 
     // If you want to allow some core blocks (e.g., for simple text or media), 
