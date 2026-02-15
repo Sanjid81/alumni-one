@@ -26,6 +26,12 @@ function headless_register_components()
                     ->set_default_value(''),
                 Field::make('text', 'button_text', __('Button Text', 'nh'))
                     ->set_default_value(''),
+                Field::make('radio', 'link_source', __('Link Source', 'nh'))
+                    ->add_options(array(
+                        'internal' => __('Internal', 'nh'),
+                        'custom' => __('Custom', 'nh'),
+                    ))
+                    ->set_default_value('internal'),
                 Field::make('association', 'button_page', __('Select Button Page', 'nh'))
                     ->set_types([
                         [
@@ -33,8 +39,21 @@ function headless_register_components()
                             'post_type' => 'page',
                         ],
                     ])
-                    ->set_max(1),
-                Field::make( 'checkbox', 'open_in_new_tab', __( 'Open in new tab', 'nh' ) ),
+                    ->set_max(1)
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'link_source',
+                            'value' => 'internal',
+                        )
+                    )),
+                Field::make('text', 'custom_url', __('Custom URL', 'nh'))
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'link_source',
+                            'value' => 'custom',
+                        )
+                    )),
+                Field::make('checkbox', 'open_in_new_tab', __('Open in new tab', 'nh')),
             ))
             ->set_icon('star-filled')
             ->set_keywords([__('Hero Custom Block', 'nh')])
@@ -65,6 +84,12 @@ function headless_register_components()
                     ->set_default_value(''),
                 Field::make('textarea', 'body_description', __('Body Description', 'nh'))
                     ->set_default_value(''),
+                Field::make('radio', 'link_source', __('Link Source', 'nh'))
+                    ->add_options(array(
+                        'internal' => __('Internal', 'nh'),
+                        'custom' => __('Custom', 'nh'),
+                    ))
+                    ->set_default_value('internal'),
                 Field::make('association', 'button_page', __('Select Button Page', 'nh'))
                     ->set_types([
                         [
@@ -72,8 +97,21 @@ function headless_register_components()
                             'post_type' => 'page',
                         ],
                     ])
-                    ->set_max(1),
-                Field::make( 'checkbox', 'open_in_new_tab', __( 'Open in new tab', 'nh' ) ),
+                    ->set_max(1)
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'link_source',
+                            'value' => 'internal',
+                        )
+                    )),
+                Field::make('text', 'custom_url', __('Custom URL', 'nh'))
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'link_source',
+                            'value' => 'custom',
+                        )
+                    )),
+                Field::make('checkbox', 'open_in_new_tab', __('Open in new tab', 'nh')),
             ))
             ->set_icon('portfolio')
             ->set_keywords([__('Our Work Custom Block', 'nh')])
@@ -94,6 +132,12 @@ function headless_register_components()
                     ]),
                 Field::make('text', 'button_text', __('Button Text', 'nh'))
                     ->set_default_value(''),
+                Field::make('radio', 'link_source', __('Link Source', 'nh'))
+                    ->add_options(array(
+                        'internal' => __('Internal', 'nh'),
+                        'custom' => __('Custom', 'nh'),
+                    ))
+                    ->set_default_value('internal'),
                 Field::make('association', 'button_page', __('Select Button Page', 'nh'))
                     ->set_types([
                         [
@@ -101,7 +145,20 @@ function headless_register_components()
                             'post_type' => 'page',
                         ],
                     ])
-                    ->set_max(1),
+                    ->set_max(1)
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'link_source',
+                            'value' => 'internal',
+                        )
+                    )),
+                Field::make('text', 'custom_url', __('Custom URL', 'nh'))
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'link_source',
+                            'value' => 'custom',
+                        )
+                    )),
                 Field::make('checkbox', 'open_in_new_tab', __('Open in new tab', 'nh')),
             ))
             ->set_icon('portfolio')
@@ -125,14 +182,33 @@ function headless_register_components()
                             'post_type' => 'insights',
                         ],
                     ]),
+                Field::make('radio', 'link_source', __('Link Source', 'nh'))
+                    ->add_options(array(
+                        'internal' => __('Internal', 'nh'),
+                        'custom' => __('Custom', 'nh'),
+                    ))
+                    ->set_default_value('internal'),
                 Field::make('association', 'button_page', __('Select Button Page', 'nh'))
-                    ->set_types([ 
+                    ->set_types([
                         [
                             'type' => 'post',
                             'post_type' => 'page',
                         ],
                     ])
-                    ->set_max(1),
+                    ->set_max(1)
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'link_source',
+                            'value' => 'internal',
+                        )
+                    )),
+                Field::make('text', 'custom_url', __('Custom URL', 'nh'))
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'link_source',
+                            'value' => 'custom',
+                        )
+                    )),
                 Field::make('checkbox', 'open_in_new_tab', __('Open in new tab', 'nh')),
             ))
             ->set_icon('images-alt2')
@@ -152,7 +228,7 @@ function headless_register_components()
                     ->add_fields(array(
                         Field::make('text', 'card_title_short', __('Title on Card (Short)', 'nh'))
                             ->set_default_value(''),
-                        Field::make('text', 'item_title', __('Item Title', 'nh'))
+                        Field::make('textarea', 'item_title', __('Item Title', 'nh'))
                             ->set_default_value(''),
                         Field::make('textarea', 'item_description', __('Item Description', 'nh'))
                             ->set_default_value(''),
@@ -212,6 +288,33 @@ function headless_register_components()
                     ->set_default_value(''),
                 Field::make('textarea', 'description', __('Description', 'nh'))
                     ->set_default_value(''),
+                Field::make('radio', 'redirect_source', __('Redirect Source', 'nh'))
+                    ->add_options(array(
+                        'internal' => __('Internal', 'nh'),
+                        'custom' => __('Custom', 'nh'),
+                    ))
+                    ->set_default_value('internal'),
+                Field::make('association', 'redirect_page', __('Redirect Page', 'nh'))
+                    ->set_types([
+                        [
+                            'type' => 'post',
+                            'post_type' => 'page',
+                        ],
+                    ])
+                    ->set_max(1)
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'redirect_source',
+                            'value' => 'internal',
+                        )
+                    )),
+                Field::make('text', 'redirect_custom_url', __('Redirect Custom URL', 'nh'))
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'redirect_source',
+                            'value' => 'custom',
+                        )
+                    )),
             ))
             ->set_icon('email')
             ->set_keywords([__('Get In Touch Custom Block', 'nh')])
@@ -314,6 +417,33 @@ function headless_register_components()
                     ->set_default_value(''),
                 Field::make('text', 'email_address', __('Email Address', 'nh'))
                     ->set_default_value(''),
+                Field::make('radio', 'redirect_source', __('Redirect Source', 'nh'))
+                    ->add_options(array(
+                        'internal' => __('Internal', 'nh'),
+                        'custom' => __('Custom', 'nh'),
+                    ))
+                    ->set_default_value('internal'),
+                Field::make('association', 'redirect_page', __('Redirect Page', 'nh'))
+                    ->set_types([
+                        [
+                            'type' => 'post',
+                            'post_type' => 'page',
+                        ],
+                    ])
+                    ->set_max(1)
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'redirect_source',
+                            'value' => 'internal',
+                        )
+                    )),
+                Field::make('text', 'redirect_custom_url', __('Redirect Custom URL', 'nh'))
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'redirect_source',
+                            'value' => 'custom',
+                        )
+                    )),
             ))
             ->set_icon('phone')
             ->set_keywords([__('Contact Us Custom Block', 'nh')])
@@ -545,6 +675,12 @@ function headless_register_components()
                     ->set_default_value(''),
                 Field::make('text', 'button_text', __('Button Text', 'nh'))
                     ->set_default_value(''),
+                Field::make('radio', 'link_source', __('Link Source', 'nh'))
+                    ->add_options(array(
+                        'internal' => __('Internal', 'nh'),
+                        'custom' => __('Custom', 'nh'),
+                    ))
+                    ->set_default_value('internal'),
                 Field::make('association', 'button_page', __('Select Button Page', 'nh'))
                     ->set_types([
                         [
@@ -552,8 +688,21 @@ function headless_register_components()
                             'post_type' => 'page',
                         ],
                     ])
-                    ->set_max(1),
-                Field::make( 'checkbox', 'open_in_new_tab', __( 'Open in new tab', 'nh' ) ),
+                    ->set_max(1)
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'link_source',
+                            'value' => 'internal',
+                        )
+                    )),
+                Field::make('text', 'custom_url', __('Custom URL', 'nh'))
+                    ->set_conditional_logic(array(
+                        array(
+                            'field' => 'link_source',
+                            'value' => 'custom',
+                        )
+                    )),
+                Field::make('checkbox', 'open_in_new_tab', __('Open in new tab', 'nh')),
             ))
             ->set_icon('star-filled')
             ->set_keywords([__('Thank You Hero Custom Block', 'nh')])
@@ -595,6 +744,12 @@ WpGraphQLCrbContainer::register(
             Field::make('text', 'button_text', __('Button Text', 'nh'))
                 ->set_default_value(''),
 
+            Field::make('radio', 'link_source', __('Link Source', 'nh'))
+                ->add_options(array(
+                    'internal' => __('Internal', 'nh'),
+                    'custom' => __('Custom', 'nh'),
+                ))
+                ->set_default_value('internal'),
             Field::make('association', 'button_page', __('Button Page', 'nh'))
                 ->set_types([
                     [
@@ -602,7 +757,20 @@ WpGraphQLCrbContainer::register(
                         'post_type' => 'page',
                     ],
                 ])
-                ->set_max(1),
+                ->set_max(1)
+                ->set_conditional_logic(array(
+                    array(
+                        'field' => 'link_source',
+                        'value' => 'internal',
+                    )
+                )),
+            Field::make('text', 'custom_url', __('Custom URL', 'nh'))
+                ->set_conditional_logic(array(
+                    array(
+                        'field' => 'link_source',
+                        'value' => 'custom',
+                    )
+                )),
 
             Field::make('text', 'email', __('Email Address', 'nh'))
                 ->set_default_value(''),
