@@ -708,6 +708,198 @@ function headless_register_components()
             ->set_keywords([__('Thank You Hero Custom Block', 'nh')])
             ->set_description(__('Custom Thank You Hero Block', 'nh'))
             ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        /////////////////////////////////////////////
+        // Standard Blocks (Core Wrappers)
+        /////////////////////////////////////////////
+
+        // Paragraph
+        Block::make(__('Core Paragraph', 'nh'))
+            ->add_fields(array(
+                Field::make('rich_text', 'content', __('Content', 'nh'))
+                    ->set_default_value(''),
+            ))
+            ->set_icon('editor-paragraph')
+            ->set_keywords([__('paragraph', 'nh'), __('text', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Heading
+        Block::make(__('Core Heading', 'nh'))
+            ->add_fields(array(
+                Field::make('text', 'content', __('Heading Text', 'nh'))
+                    ->set_default_value(''),
+                Field::make('select', 'level', __('Heading Level', 'nh'))
+                    ->add_options(array(
+                        'h1' => 'H1',
+                        'h2' => 'H2',
+                        'h3' => 'H3',
+                        'h4' => 'H4',
+                        'h5' => 'H5',
+                        'h6' => 'H6',
+                    ))
+                    ->set_default_value('h2'),
+            ))
+            ->set_icon('heading')
+            ->set_keywords([__('heading', 'nh'), __('title', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // List
+        Block::make(__('Core List', 'nh'))
+            ->add_fields(array(
+                Field::make('complex', 'list_items', __('List Items', 'nh'))
+                    ->add_fields(array(
+                        Field::make('text', 'item', __('Item', 'nh')),
+                    ))
+                    ->set_layout('tabbed-horizontal'),
+                Field::make('select', 'list_type', __('List Type', 'nh'))
+                    ->add_options(array(
+                        'ul' => __('Unordered (Bullets)', 'nh'),
+                        'ol' => __('Ordered (Numbers)', 'nh'),
+                    ))
+                    ->set_default_value('ul'),
+            ))
+            ->set_icon('editor-ul')
+            ->set_keywords([__('list', 'nh'), __('bullets', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Quote
+        Block::make(__('Core Quote', 'nh'))
+            ->add_fields(array(
+                Field::make('textarea', 'quote', __('Quote', 'nh'))
+                    ->set_default_value(''),
+                Field::make('text', 'cite', __('Citation/Author', 'nh'))
+                    ->set_default_value(''),
+            ))
+            ->set_icon('editor-quote')
+            ->set_keywords([__('quote', 'nh'), __('testimonial', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Code
+        Block::make(__('Core Code', 'nh'))
+            ->add_fields(array(
+                Field::make('textarea', 'code', __('Code', 'nh'))
+                    ->set_default_value(''),
+                Field::make('text', 'language', __('Language (Optional)', 'nh'))
+                    ->set_default_value(''),
+            ))
+            ->set_icon('editor-code')
+            ->set_keywords([__('code', 'nh'), __('programming', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Details
+        Block::make(__('Core Details', 'nh'))
+            ->add_fields(array(
+                Field::make('text', 'summary', __('Summary (Clickable)', 'nh'))
+                    ->set_default_value(''),
+                Field::make('rich_text', 'content', __('Hidden Content', 'nh'))
+                    ->set_default_value(''),
+            ))
+            ->set_icon('list-view')
+            ->set_keywords([__('details', 'nh'), __('accordion', 'nh'), __('summary', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Math
+        Block::make(__('Core Math', 'nh'))
+            ->add_fields(array(
+                Field::make('textarea', 'formula', __('Math Formula (LaTeX)', 'nh'))
+                    ->set_default_value(''),
+            ))
+            ->set_icon('editor-italic')
+            ->set_keywords([__('math', 'nh'), __('formula', 'nh'), __('latex', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Preformatted
+        Block::make(__('Core Preformatted', 'nh'))
+            ->add_fields(array(
+                Field::make('textarea', 'content', __('Content', 'nh'))
+                    ->set_default_value(''),
+            ))
+            ->set_icon('editor-code')
+            ->set_keywords([__('preformatted', 'nh'), __('text', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Pullquote
+        Block::make(__('Core Pullquote', 'nh'))
+            ->add_fields(array(
+                Field::make('textarea', 'quote', __('Quote', 'nh'))
+                    ->set_default_value(''),
+                Field::make('text', 'cite', __('Citation/Author', 'nh'))
+                    ->set_default_value(''),
+            ))
+            ->set_icon('editor-quote')
+            ->set_keywords([__('pullquote', 'nh'), __('quote', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Table
+        Block::make(__('Core Table', 'nh'))
+            ->add_fields(array(
+                Field::make('complex', 'rows', __('Table Rows', 'nh'))
+                    ->add_fields(array(
+                        Field::make('complex', 'columns', __('Columns', 'nh'))
+                            ->add_fields(array(
+                                Field::make('text', 'cell', __('Cell Content', 'nh')),
+                            ))
+                            ->set_layout('tabbed-horizontal'),
+                    ))
+                    ->set_layout('tabbed-vertical'),
+            ))
+            ->set_icon('editor-table')
+            ->set_keywords([__('table', 'nh'), __('data', 'nh'), __('grid', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Verse
+        Block::make(__('Core Verse', 'nh'))
+            ->add_fields(array(
+                Field::make('textarea', 'content', __('Content', 'nh'))
+                    ->set_default_value(''),
+            ))
+            ->set_icon('editor-customchar')
+            ->set_keywords([__('verse', 'nh'), __('poetry', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Classic
+        Block::make(__('Core Classic', 'nh'))
+            ->add_fields(array(
+                Field::make('rich_text', 'content', __('Content', 'nh'))
+                    ->set_default_value(''),
+            ))
+            ->set_icon('editor-kitchensink')
+            ->set_keywords([__('classic', 'nh'), __('editor', 'nh'), __('tinymce', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Stretchy Paragraph
+        Block::make(__('Stretchy Paragraph', 'nh'))
+            ->add_fields(array(
+                Field::make('rich_text', 'content', __('Content', 'nh'))
+                    ->set_default_value(''),
+                Field::make('checkbox', 'is_stretchy', __('Enable Stretchy Effect', 'nh'))
+                    ->set_default_value(true),
+            ))
+            ->set_icon('editor-paragraph')
+            ->set_keywords([__('stretchy', 'nh'), __('paragraph', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
+
+        // Stretchy Heading
+        Block::make(__('Stretchy Heading', 'nh'))
+            ->add_fields(array(
+                Field::make('text', 'content', __('Heading Text', 'nh'))
+                    ->set_default_value(''),
+                Field::make('select', 'level', __('Heading Level', 'nh'))
+                    ->add_options(array(
+                        'h1' => 'H1',
+                        'h2' => 'H2',
+                        'h3' => 'H3',
+                        'h4' => 'H4',
+                        'h5' => 'H5',
+                        'h6' => 'H6',
+                    ))
+                    ->set_default_value('h2'),
+                Field::make('checkbox', 'is_stretchy', __('Enable Stretchy Effect', 'nh'))
+                    ->set_default_value(true),
+            ))
+            ->set_icon('heading')
+            ->set_keywords([__('stretchy', 'nh'), __('heading', 'nh')])
+            ->set_render_callback(function ($fields, $attributes, $inner_blocks) {}),
     );
 
 
