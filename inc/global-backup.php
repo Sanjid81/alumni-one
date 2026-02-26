@@ -100,11 +100,21 @@ function headless_restrict_admin_menu()
         remove_menu_page('wp-graphql-gutenberg-admin'); // WPGraphQL Gutenberg
     }
 }
-add_action('admin_menu', 'headless_restrict_admin_menu', 999);
+/**
+ * Redirect "Visit Site" and Home links to the Frontend URL
+ */
+function headless_redirect_home_links($url)
+{
+    $frontend_url = carbon_get_theme_option('url');
+    if (!empty($frontend_url)) {
+        return rtrim($frontend_url, '/');
+    }
+    return $url;
+}
+add_filter('home_url', 'headless_redirect_home_links');
 
 /**
  * Specifically ensure Admin Bar "Visit Site" link points to frontend
- * This is safer than filtering home_url which can break the admin.
  */
 function headless_custom_admin_bar_site_link($wp_admin_bar)
 {

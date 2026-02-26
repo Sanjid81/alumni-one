@@ -21,7 +21,7 @@ function Postmeta()
     Container::make('post_meta', 'Insight Details')
     ->where('post_type', '=', 'insights')
     ->add_fields(array(
-        Field::make('textarea', 'insight_description', __('Description', 'nh')),
+        Field::make('textarea', 'insight_description', __('Description on homepage', 'nh')),
     )));
 }
 

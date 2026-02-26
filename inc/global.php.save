@@ -1,38 +1,3 @@
-<?php
-
-function add_graphql_support_to_posts($args, $post_type)
-{
-    if ('post' === $post_type) {
-        $args['show_in_graphql'] = true;
-        $args['graphql_single_name'] = 'post';
-        $args['graphql_plural_name'] = 'posts';
-    }
-    return $args;
-}
-
-function headless_allowed_block_types($allowed_blocks, $editor_context)
-{
-    $view_mode = carbon_get_theme_option('view_mode');
-
-    // If not in content management mode, allow all blocks
-    if ($view_mode !== 'content_management') {
-        return $allowed_blocks;
-    }
-
-    // List of allowed custom blocks
-    $custom_blocks = array(
-        'carbon-fields/hero',
-        'carbon-fields/our-work',
-        'carbon-fields/project-selected-showcase',
-        'carbon-fields/insight-selected-showcase',
-        'carbon-fields/what-we-do',
-        'carbon-fields/our-clients',
-        'carbon-fields/testimonials',
-        'carbon-fields/get-in-touch',
-        'carbon-fields/about-us-hero',
-        'carbon-fields/team-member-showcase',
-        'carbon-fields/hero-insight',
-        'carbon-fields/all-insights-showcase',
         'carbon-fields/all-projects-showcase',
         'carbon-fields/contact-us',
         'carbon-fields/project-overview',
@@ -100,27 +65,22 @@ function headless_restrict_admin_menu()
         remove_menu_page('wp-graphql-gutenberg-admin'); // WPGraphQL Gutenberg
     }
 }
-add_action('admin_menu', 'headless_restrict_admin_menu', 999);
-
 /**
- * Specifically ensure Admin Bar "Visit Site" link points to frontend
- * This is safer than filtering home_url which can break the admin.
+ * Redirect "Visit Site" and Home links to the Frontend URL
  */
-function headless_custom_admin_bar_site_link($wp_admin_bar)
+function headless_redirect_home_links($url)
 {
     $frontend_url = carbon_get_theme_option('url');
     if (!empty($frontend_url)) {
-        $node = $wp_admin_bar->get_node('view-site');
-        if ($node) {
-            $node->href = rtrim($frontend_url, '/');
-            $wp_admin_bar->add_node($node);
-        }
-        
-        $node_home = $wp_admin_bar->get_node('site-name');
-        if ($node_home) {
-            $node_home->href = rtrim($frontend_url, '/');
-            $wp_admin_bar->add_node($node_home);
-        }
+        return rtrim($frontend_url, '/');
     }
+    return $url;
 }
-add_action('admin_bar_menu', 'headless_custom_admin_bar_site_link', 999);
+add_filter('home_url', 'headless_redirect_home_links');
+
+/**
+ * Specifically ensure Admin Bar "Visit Site" link points to frontend
+ */
+function headless_custom_admin_bar_site_link($wp_admin_bar)
+{
+    $frontend_url = carbon_get_the

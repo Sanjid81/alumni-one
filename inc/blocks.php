@@ -64,25 +64,17 @@ function headless_register_components()
             ->add_fields(array(
                 Field::make('html', 'crb_information_text')
                     ->set_html('<h2>Our Work Block</h2><img src="' . IMG . 'http://headless-toha-startup.local/wp-content/uploads/2026/02/our-work.png" style="max-width: 100%;width: 100%; height: auto; border: 1px solid #ddd; margin-top: 10px;" />'),
-                Field::make('select', 'style_version', __('Style Version', 'nh'))
-                    ->add_options(array(
-                        'v1' => __('Version 1', 'nh'),
-                        'v2' => __('Version 2', 'nh'),
-                    ))
-                    ->set_default_value('v1'),
                 Field::make('text', 'section_title', __('Section Title', 'nh'))
-                    ->set_default_value('')
-                    ->set_conditional_logic(array(
-                        array(
-                            'field' => 'style_version',
-                            'value' => 'v1',
-                        )
-                    )),
+                    ->set_default_value(''),
                 Field::make('image', 'background_image', __('Background Image', 'nh'))
                     ->set_value_type('url'),
                 Field::make('text', 'body_title', __('Body Title', 'nh'))
                     ->set_default_value(''),
                 Field::make('textarea', 'body_description', __('Body Description', 'nh'))
+                    ->set_default_value(''),
+                Field::make('textarea', 'author_name', __("Author's Name", 'nh'))
+                    ->set_default_value(''),
+                Field::make('text', 'button_text', __('Button Text', 'nh'))
                     ->set_default_value(''),
                 Field::make('radio', 'link_source', __('Link Source', 'nh'))
                     ->add_options(array(
@@ -182,6 +174,8 @@ function headless_register_components()
                             'post_type' => 'insights',
                         ],
                     ]),
+				Field::make('text', 'button_text', __('Button Text', 'nh'))
+            		->set_default_value(''),
                 Field::make('radio', 'link_source', __('Link Source', 'nh'))
                     ->add_options(array(
                         'internal' => __('Internal', 'nh'),
@@ -234,7 +228,45 @@ function headless_register_components()
                             ->set_default_value(''),
                         Field::make('color', 'background_color', __('Background Color', 'nh'))
                             ->set_default_value(''),
-                    ))
+						Field::make('text', 'button_text', __('Button Text', 'nh'))
+                    ->set_default_value(''),
+
+						// ✅ Link Source
+						Field::make('radio', 'link_source', __('Link Source', 'nh'))
+							->add_options(array(
+								'internal' => __('Internal', 'nh'),
+								'custom'   => __('Custom', 'nh'),
+							))
+							->set_default_value('internal'),
+
+						// ✅ Internal Page
+						Field::make('association', 'button_page', __('Select Button Page', 'nh'))
+							->set_types([
+								[
+									'type' => 'post',
+									'post_type' => 'page',
+								],
+							])
+							->set_max(1)
+							->set_conditional_logic(array(
+								array(
+									'field' => 'link_source',
+									'value' => 'internal',
+								)
+							)),
+
+						// ✅ Custom URL
+						Field::make('text', 'custom_url', __('Custom URL', 'nh'))
+							->set_conditional_logic(array(
+								array(
+									'field' => 'link_source',
+									'value' => 'custom',
+								)
+							)),
+
+						// ✅ New Tab Option
+						Field::make('checkbox', 'open_in_new_tab', __('Open in new tab', 'nh')),
+							))
             ))
             ->set_icon('grid-view')
             ->set_keywords([__('What We Do Custom Block', 'nh')])
@@ -965,6 +997,9 @@ WpGraphQLCrbContainer::register(
                 )),
 
             Field::make('text', 'email', __('Email Address', 'nh'))
+                ->set_default_value(''),
+			
+			Field::make('text', 'smtp-email', __('Smtp Email Address', 'nh'))
                 ->set_default_value(''),
 
             Field::make('textarea', 'address', __('Physical Address', 'nh'))

@@ -27,7 +27,7 @@ add_action('rest_api_init', 'contact_endpoint');
     }
 
     // Get the admin email
-    $admin_email = carbon_get_theme_option('email') ?? get_option('admin_email');
+    $admin_email = carbon_get_theme_option('smtp-email');
 
     // Get the form fields from the frontend
     $name = isset($params['name']) ? sanitize_text_field($params['name']) : '';
