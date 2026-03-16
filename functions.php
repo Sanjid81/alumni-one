@@ -75,7 +75,7 @@ require get_template_directory() . '/inc/post-meta.php';
  * Rest API Routes
  */
 require get_template_directory() . '/webhook/next.php';
-require get_template_directory() . '/inc/rest-api/contact_endpoint.php';
+// require get_template_directory() . '/inc/rest-api/contact_endpoint.php';
 
 
 
