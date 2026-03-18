@@ -88,3 +88,32 @@ function add_noindex() {
 add_action( 'wp_head', 'add_noindex' );
 
 add_filter( 'xmlrpc_enabled', '__return_false' );
+
+
+
+// Allow SVG upload (mime + filetype check + thumbnail fix)
+function mytheme_allow_svg_uploads( $mimes ) {
+    $mimes['svg']  = 'image/svg+xml';
+    $mimes['svgz'] = 'image/svg+xml';
+    return $mimes;
+}
+add_filter( 'upload_mimes', 'mytheme_allow_svg_uploads' );
+
+/**
+ * Allow SVG through WordPress filetype check
+ */
+function mytheme_fix_svg_filetype_and_ext( $data, $file, $filename, $mimes, $real_mime = '' ) {
+    $ext = pathinfo( $filename, PATHINFO_EXTENSION );
+
+    if ( ! $data['type'] ) {
+        if ( strtolower( $ext ) === 'svg' || strtolower( $ext ) === 'svgz' ) {
+            $data['ext']  = 'svg';
+            $data['type'] = 'image/svg+xml';
+        }
+    }
+
+    return $data;
+}
+add_filter( 'wp_check_filetype_and_ext', 'mytheme_fix_svg_filetype_and_ext', 10, 5 );
+
+// Note: No extra image editor filters needed for SVG.
